@@ -82,6 +82,15 @@ app.get('/', function(req, res) {
   }
 });
 
+app.get('/login', function(req, res) {
+  if(req.session.username) {
+    res.redirect('/home');
+  }
+  else {
+    res.render('login',{output: ''});
+  }
+});
+
 // Here we handle the post request of the user in the login page
 app.post('/', function(req, res) {
   let data = fs.readFileSync('users.json');
@@ -104,13 +113,44 @@ app.post('/', function(req, res) {
           break;
         }else{
           // A message should be displayed indicating that the password is wrong
-          res.render('login',{output: "WRONG PASSWORD OR PASSWORD"});
+          res.render('login',{output: "WRONG PASSWORD"});
         }
       }
     }
     if(found==false){
       // A message should be displayed indicating that the user is not registered yet
-      res.render('login',{output: "WRONG USERNAME"});
+      res.render('login',{output: "WRONG USERNAME OR PASSWORD"});
+    }
+  }
+});
+app.post('/login', function(req, res) {
+  let data = fs.readFileSync('users.json');
+  let StringData = data.toString();
+  if(StringData == ''){
+       // A message should be displayed indicating that the username is wrong
+       res.render('login',{output: "WRONG USERNAME OR PASSWORD"});
+  }
+  else{
+    let user = req.body; 
+    let parsedData = JSON.parse(StringData);
+    var found=false;
+    for(var i = 0;i<parsedData.length;i++){
+      if(parsedData[i].username  == user.username)
+      {
+        found=true;
+        if(parsedData[i].password == user.password){
+          req.session.username = req.body.username;
+          res.redirect('/home');
+          break;
+        }else{
+          // A message should be displayed indicating that the password is wrong
+          res.render('login',{output: "WRONG PASSWORD"});
+        }
+      }
+    }
+    if(found==false){
+      // A message should be displayed indicating that the user is not registered yet
+      res.render('login',{output: "WRONG USERNAME OR PASSWORD"});
     }
   }
 });
