@@ -88,7 +88,7 @@ app.post('/', function(req, res) {
   let StringData = data.toString();
   if(StringData == ''){
        // A message should be displayed indicating that the username is wrong
-       res.render('login',{output: "WRONG USERNAME"});
+       res.render('login',{output: "WRONG USERNAME OR PASSWORD"});
   }
   else{
     let user = req.body; 
@@ -104,7 +104,7 @@ app.post('/', function(req, res) {
           break;
         }else{
           // A message should be displayed indicating that the password is wrong
-          res.render('login',{output: "WRONG PASSWORD"});
+          res.render('login',{output: "WRONG PASSWORD OR PASSWORD"});
         }
       }
     }
