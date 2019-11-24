@@ -70,9 +70,6 @@ app.post('/addfightclubtowatchlist', function(req,res){
   addtoWatchlist('fightclub',req, res);
 });
 
-
-//end of new
-
 app.get('/', function(req, res) {
   if(req.session.username) {
     res.redirect('/home');
