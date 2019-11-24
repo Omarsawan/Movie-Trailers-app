@@ -81,7 +81,7 @@ app.get('/', function(req, res) {
     res.render('login',{output: ''});
   }
 });
-
+//handle the login
 app.get('/login', function(req, res) {
   if(req.session.username) {
     res.redirect('/home');
@@ -90,6 +90,7 @@ app.get('/login', function(req, res) {
     res.render('login',{output: ''});
   }
 });
+//handle the logout
 app.post('/logout', function(req, res) {
   req.session.destroy((err)=>{
     if(err){
