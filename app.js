@@ -90,7 +90,15 @@ app.get('/login', function(req, res) {
     res.render('login',{output: ''});
   }
 });
-
+app.post('/logout', function(req, res) {
+  req.session.destroy((err)=>{
+    if(err){
+      return console.log(err);
+    }
+    res.redirect('/');
+  });
+  
+});
 // Here we handle the post request of the user in the login page
 app.post('/', function(req, res) {
   let data = fs.readFileSync('users.json');
